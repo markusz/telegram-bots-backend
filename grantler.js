@@ -2,8 +2,8 @@
 
 const http = require('https');
 // Your first function handler
-module.exports.hello = (event, context, cb) => cb(null,
-  { message: 'Go Serverless v1.0! Your function executed successfully!', event }
+module.exports.griasde = (event, context, cb) => cb(null,
+  { message: 'Griasde nachad!', event }
 );
 
 module.exports.grantel = (event, context, callback) => {
@@ -28,6 +28,8 @@ module.exports.grantel = (event, context, callback) => {
     'Hoid dei Bappn',
     'So a Gratler!'
   ];
+
+
 
   const text = grantlMessages[Math.floor(Math.random() * grantlMessages.length)];
   const botToken = event.stageVariables.BOT_TOKEN;

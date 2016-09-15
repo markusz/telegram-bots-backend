@@ -48,13 +48,13 @@ defaults:
 
 functions:
   grantel:
-    handler: handler.grantel
+    handler: grantler.grantel
     events:
       - http:
           path: bots/grantler/grantel
           method: post
-  hello:
-    handler: handler.hello
+  griasde:
+    handler: grantler.griasde
     events:
       - http:
           path: bots/grantler/griasde
