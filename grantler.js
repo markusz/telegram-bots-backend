@@ -1,16 +1,14 @@
 'use strict';
 
 const http = require('https');
-// Your first function handler
-module.exports.griasde = (event, context, cb) => cb(null,
-  { message: 'Griasde nachad!', event }
-);
+const grantlerConfig = require('./config/grantler.json');
+const MessagingUtil = require('./utils/messaging-utils').create();
+
+module.exports.griasde = (event, context, cb) => cb(null, { message: 'Griasde nachad!', event });
 
 module.exports.grantel = (event, context, callback) => {
   console.log(event);
-
-  const p_resp = 0.5;
-  const respMinLength = 12;
+  const botToken = event.stageVariables.BOT_TOKEN;
 
   const grantlMessages = [
     'Ha? Wos mechst?',
@@ -29,14 +27,15 @@ module.exports.grantel = (event, context, callback) => {
     'So a Gratler!'
   ];
 
-
-
-  const text = grantlMessages[Math.floor(Math.random() * grantlMessages.length)];
-  const botToken = event.stageVariables.BOT_TOKEN;
-  const messageUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${event.message.chat.id}&text=${text}`;
+  const grantlMessage = MessagingUtil.selectRandomMessage(grantlMessages);
+  const messageUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${event.message.chat.id}&text=${grantlMessage}`;
 
   const forcedGrantelFlow = event.message.text.toLowerCase() === 'granteln!';
-  const regularGrantelFlow = Math.random() >= p_resp && event.message.text.length >= respMinLength;
+
+  const hasMinResponseLength = event.message.text.length >= grantlerConfig.respMinLength;
+  const isRandomGrantTurn = Math.random() >= grantlerConfig.p_resp;
+  const regularGrantelFlow = isRandomGrantTurn && hasMinResponseLength;
+
   console.log(`forced: ${forcedGrantelFlow}, regular: ${regularGrantelFlow}`);
   if (regularGrantelFlow || forcedGrantelFlow) {
     return http.get(messageUrl, res => {
@@ -50,5 +49,3 @@ module.exports.grantel = (event, context, callback) => {
 
   context.done();
 };
-
-// You can add more handlers here, and reference them in serverless.yml
