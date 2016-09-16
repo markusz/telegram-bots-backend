@@ -2,3 +2,4 @@
 /.idea/
 /.serverless/
 *.iml
+node_modules/
