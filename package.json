@@ -1,0 +1,25 @@
+{
+  "name": "telegram-bots-backend",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=4.0"
+  },
+  "description": "todo",
+  "author": "Markus Ziller",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/markusz/telegram-bots-backend"
+  },
+  "keywords": [
+    "telegram",
+    "aws",
+    "lambda",
+    "serverless"
+  ],
+  "scripts": {},
+  "dependencies": {
+    "superagent": "*",
+    "lodash": "*"
+  }
+}
