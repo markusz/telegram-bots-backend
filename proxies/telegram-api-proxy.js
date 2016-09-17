@@ -1,7 +1,5 @@
 'use strict';
 
-const lodash = require('lodash');
-
 module.exports.inject = (DependenciesBroker) => {
   const sa = DependenciesBroker.superagent;
 
@@ -16,14 +14,22 @@ module.exports.inject = (DependenciesBroker) => {
       return new TelegramAPIProxy(botToken, chatId);
     }
 
-    sendMessage(message, cb) {
-      const resourceURL = `${this.baseURL}/sendMessage`;
-      sa.get(resourceURL)
-        .query({
-          chat_id: this.chatId,
-          text: message
-        })
-        .end(cb);
+    sendMessage(message) {
+      return new Promise((resolve, reject) => {
+        const resourceURL = `${this.baseURL}/sendMessage`;
+        sa.get(resourceURL)
+          .query({
+            chat_id: this.chatId,
+            text: message
+          })
+          .end((err, res) => {
+            if (err) {
+              return reject(new Error(err));
+            }
+
+            return resolve(res.body);
+          });
+      });
     }
   };
 };
