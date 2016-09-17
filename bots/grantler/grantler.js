@@ -43,12 +43,16 @@ module.exports.inject = (DependenciesBroker, UtilsBroker, ModelBroker) => class 
   }
 
   handleDirectAddress(telegramAPIProxy, telegramMessage) {
-    return telegramAPIProxy.sendMessage('Wos mechstn scho wieda?');
+    return this.config.reactToDirectAddress ? telegramAPIProxy.sendMessage('Wos mechstn scho wieda?') : UtilsBroker.TelegramAPIProxy.doNothing();
   }
 
   handleForcedGranteln(telegramAPIProxy, telegramMessage) {
-    const grantlMessage = UtilsBroker.GrantlerCommunicationUtil.selectRandomMessageAsResponseToReceivedTelegramMessage(telegramMessage);
-    return telegramAPIProxy.sendMessage(grantlMessage);
+    if (this.config.reactToForcedGranteln) {
+      const grantlMessage = UtilsBroker.GrantlerCommunicationUtil.selectRandomMessageAsResponseToReceivedTelegramMessage(telegramMessage);
+      return telegramAPIProxy.sendMessage(grantlMessage);
+    }
+
+    return UtilsBroker.TelegramAPIProxy.doNothing();
   }
 
   handleIncomingMessage(telegramMessage) {

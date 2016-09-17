@@ -1,4 +1,6 @@
 {
   "p_resp": 0.25,
-  "respMinLength": 12
+  "respMinLength": 12,
+  "reactToDirectAddress": true,
+  "reactToForcedGranteln": true
 }
