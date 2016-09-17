@@ -6,6 +6,7 @@ const DependenciesBroker = {
 
 const UtilsBroker = {
   MessagingUtil: require('./utils/messaging-utils').inject(),
+  GrantlerCommunicationUtil: require('./bots/grantler/communication').inject(),
   TelegramAPIProxy: require('./proxies/telegram-api-proxy').inject(DependenciesBroker)
 };
 
