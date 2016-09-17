@@ -1,9 +1,9 @@
 'use strict';
 
 const MESSAGE_TYPES = {
-  DIRECT_ADDRESS: 0,
-  STANDARD_CONVERSATION: 1,
-  FORCED_GRANTELN: 2
+  DIRECT_ADDRESS: 'DIRECT_ADDRESS',
+  STANDARD_CONVERSATION: 'STANDARD_CONVERSATION',
+  FORCED_GRANTELN: 'FORCED_GRANTELN'
 };
 
 module.exports.inject = (DependenciesBroker, UtilsBroker, ModelBroker) => class Grantler {
@@ -29,7 +29,7 @@ module.exports.inject = (DependenciesBroker, UtilsBroker, ModelBroker) => class 
   }
 
   handleStandardConversation(telegramAPIProxy, telegramMessage) {
-    const hasMinResponseLength = telegramMessage.length >= this.config.respMinLength;
+    const hasMinResponseLength = telegramMessage.getLowerCaseTextMessage().length >= this.config.respMinLength;
     const isRandomGrantTurn = Math.random() <= this.config.p_resp;
 
     const isGrantig = isRandomGrantTurn && hasMinResponseLength;
@@ -58,7 +58,10 @@ module.exports.inject = (DependenciesBroker, UtilsBroker, ModelBroker) => class 
   handleIncomingMessage(telegramMessage) {
     const telegramAPIProxy = UtilsBroker.TelegramAPIProxy.getInstance(this.token, telegramMessage.getChatId());
 
-    switch (Grantler.getTypeOfMessage(telegramMessage)) {
+    const typeOfMessage = Grantler.getTypeOfMessage(telegramMessage);
+    console.info('Type of Message is:', typeOfMessage);
+
+    switch (typeOfMessage) {
       case MESSAGE_TYPES.STANDARD_CONVERSATION:
         return this.handleStandardConversation(telegramAPIProxy, telegramMessage);
       case MESSAGE_TYPES.FORCED_GRANTELN:
