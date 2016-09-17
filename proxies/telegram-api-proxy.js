@@ -14,6 +14,14 @@ module.exports.inject = (DependenciesBroker) => {
       return new TelegramAPIProxy(botToken, chatId);
     }
 
+    static doNothing() {
+      return new Promise(resolve => {
+        resolve({
+          message: 'No flow was hit, not triggering Telegram Action'
+        });
+      });
+    }
+
     sendMessage(message) {
       return new Promise((resolve, reject) => {
         const resourceURL = `${this.baseURL}/sendMessage`;
