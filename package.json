@@ -17,7 +17,9 @@
     "lambda",
     "serverless"
   ],
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint bots/ models/ proxies/ grantler.js"
+  },
   "dependencies": {
     "superagent": "2.2.x"
   }
