@@ -58,11 +58,11 @@ module.exports.inject = (DependenciesBroker, UtilsBroker, ModelBroker) => class 
     const telegramAPIProxy = UtilsBroker.TelegramAPIProxy.getInstance(this.token, telegramMessage.getChatId());
     const receivedMessage = telegramMessage.getLowerCaseTextMessage();
 
-    const forcedGrantelFlow = receivedMessage === 'granteln!';
-
     const hasMinResponseLength = receivedMessage.length >= this.config.respMinLength;
-    const isRandomGrantTurn = Math.random() >= this.config.p_resp;
+    const isRandomGrantTurn = Math.random() <= this.config.p_resp;
+
     const regularGrantelFlow = isRandomGrantTurn && hasMinResponseLength;
+    const forcedGrantelFlow = receivedMessage === 'granteln!';
 
     console.log(`forced: ${forcedGrantelFlow}, regular: ${regularGrantelFlow}`);
 
@@ -71,7 +71,7 @@ module.exports.inject = (DependenciesBroker, UtilsBroker, ModelBroker) => class 
       return telegramAPIProxy.sendMessage(grantlMessage);
     }
 
-    return null;
+    return UtilsBroker.TelegramAPIProxy.doNothing();
   }
 
   selectRandomMessageAsResponseToReceivedTelegramMessage(receivedMessage) {
