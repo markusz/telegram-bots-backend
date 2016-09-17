@@ -20,7 +20,8 @@ const Grantler = require('./bots/grantler/grantler').inject(DependenciesBroker, 
 module.exports.griasde = (event, context, cb) => cb(null, { message: 'Griasde nachad!', event });
 
 module.exports.grantel = (event, context, callback) => {
-  console.log(event);
+  console.info('Retrieved body', event.body);
+  console.info('Acting with config', botConfig);
 
   const botToken = event.stageVariables.BOT_TOKEN;
   const telegramMessage = ModelBroker.TelegramMessage.getInstance(event.body.message);
@@ -33,11 +34,11 @@ module.exports.grantel = (event, context, callback) => {
   const handlePromise = grantler.handleIncomingMessage(telegramMessage);
   handlePromise
     .then(data => {
-      console.log(data);
+      console.info(data);
       callback(null, data);
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
       callback(err);
     });
 };
