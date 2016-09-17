@@ -7,4 +7,3 @@
 5. Set stageVariable `BOT_TOKEN` to the token retrieved by the botfather
 6. Wire Bot and AWS by calling `https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=<resource-URL>`
 7. Profit
-
