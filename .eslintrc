@@ -1,0 +1,20 @@
+{
+  "extends": "airbnb/base",
+  "rules": {
+    "comma-dangle": [2, "never"], // http://eslint.org/docs/rules/comma-dangle.html
+    "arrow-parens": "off",
+    "global-require": "off",
+    "max-len": "off",
+    "no-console": "off",
+    "func-names": 0,
+    "strict": 0,
+    "generator-star-spacing": 0,
+    "no-unused-vars": [2, { "args": "none" }]
+  },
+  "env": {
+    "node": true,
+    "es6": true,
+    "mocha": true
+  },
+  "ecmaFeatures": {}
+}

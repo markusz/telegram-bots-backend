@@ -4,7 +4,7 @@
   "engines": {
     "node": ">=4.0"
   },
-  "description": "todo",
+  "description": "The backend for a number of Telegram bots, built on AWS Lambda with the amazing Serverless Framework",
   "author": "Markus Ziller",
   "license": "MIT",
   "repository": {
@@ -19,7 +19,6 @@
   ],
   "scripts": {},
   "dependencies": {
-    "superagent": "*",
-    "lodash": "*"
+    "superagent": "2.2.x"
   }
 }
