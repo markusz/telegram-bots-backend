@@ -1,5 +1,11 @@
 'use strict';
 
+const MESSAGE_TYPES = {
+  DIRECT_ADDRESS: 0,
+  STANDARD_CONVERSATION: 1,
+  FORCED_GRANTELN: 2
+};
+
 module.exports.inject = (DependenciesBroker, UtilsBroker, ModelBroker) => class Grantler {
   constructor(settings) {
     this.token = settings.botToken;
@@ -54,24 +60,54 @@ module.exports.inject = (DependenciesBroker, UtilsBroker, ModelBroker) => class 
     ];
   }
 
-  handleIncomingMessage(telegramMessage) {
-    const telegramAPIProxy = UtilsBroker.TelegramAPIProxy.getInstance(this.token, telegramMessage.getChatId());
-    const receivedMessage = telegramMessage.getLowerCaseTextMessage();
+  getTypeOfMessage(telegramMessage) {
+    if (telegramMessage.getLowerCaseTextMessage() === 'aloisius?') {
+      return MESSAGE_TYPES.DIRECT_ADDRESS;
+    }
 
-    const hasMinResponseLength = receivedMessage.length >= this.config.respMinLength;
+    if (telegramMessage.getLowerCaseTextMessage() === 'granteln!') {
+      return MESSAGE_TYPES.FORCED_GRANTELN;
+    }
+
+    return MESSAGE_TYPES.STANDARD_CONVERSATION;
+  }
+
+  handleStandardConversation(telegramAPIProxy, telegramMessage) {
+    const hasMinResponseLength = telegramMessage.length >= this.config.respMinLength;
     const isRandomGrantTurn = Math.random() <= this.config.p_resp;
 
-    const regularGrantelFlow = isRandomGrantTurn && hasMinResponseLength;
-    const forcedGrantelFlow = receivedMessage === 'granteln!';
+    const isGrantig = isRandomGrantTurn && hasMinResponseLength;
 
-    console.log(`forced: ${forcedGrantelFlow}, regular: ${regularGrantelFlow}`);
-
-    if (regularGrantelFlow || forcedGrantelFlow) {
+    if (isGrantig) {
       const grantlMessage = this.selectRandomMessageAsResponseToReceivedTelegramMessage(telegramMessage);
       return telegramAPIProxy.sendMessage(grantlMessage);
     }
 
     return UtilsBroker.TelegramAPIProxy.doNothing();
+  }
+
+  handleDirectAddress(telegramAPIProxy, telegramMessage) {
+    return telegramAPIProxy.sendMessage('Wos mechstn scho wieda?');
+  }
+
+  handleForcedGranteln(telegramAPIProxy, telegramMessage) {
+    const grantlMessage = this.selectRandomMessageAsResponseToReceivedTelegramMessage(telegramMessage);
+    return telegramAPIProxy.sendMessage(grantlMessage);
+  }
+
+  handleIncomingMessage(telegramMessage) {
+    const telegramAPIProxy = UtilsBroker.TelegramAPIProxy.getInstance(this.token, telegramMessage.getChatId());
+
+    switch (this.getTypeOfMessage(telegramMessage)) {
+      case MESSAGE_TYPES.STANDARD_CONVERSATION:
+        return this.handleStandardConversation(telegramAPIProxy, telegramMessage);
+      case MESSAGE_TYPES.FORCED_GRANTELN:
+        return this.handleForcedGranteln(telegramAPIProxy, telegramMessage);
+      case MESSAGE_TYPES.DIRECT_ADDRESS:
+        return this.handleDirectAddress(telegramAPIProxy, telegramMessage);
+      default:
+        return UtilsBroker.TelegramAPIProxy.doNothing();
+    }
   }
 
   selectRandomMessageAsResponseToReceivedTelegramMessage(receivedMessage) {
