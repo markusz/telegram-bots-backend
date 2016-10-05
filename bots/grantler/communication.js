@@ -38,7 +38,7 @@ module.exports.inject = () => class GrantlerCommunicationUtil {
       'Ma derf ja nix song..',
       'Owe vom Gas, Speze',
       'Schaung ma moi',
-      'Schaug, dass di scheichst',
+      'Schaug, dass di schleichst',
       'So hamma fei ned gwett',
       'Zuageh duads scho wieder do herin',
       `Den bluadsdeife ${receivedMessage.getSenderName()} hob i da fileicht dick.`
