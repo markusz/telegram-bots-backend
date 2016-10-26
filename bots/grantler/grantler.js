@@ -29,7 +29,7 @@ module.exports.inject = (DependenciesBroker, UtilsBroker, ModelBroker) => class 
   }
 
   handleStandardConversation(telegramAPIProxy, telegramMessage) {
-    const hasMinResponseLength = telegramMessage.getLowerCaseTextMessage().length >= this.config.respMinLength;
+    const hasMinResponseLength = telegramMessage.getTextMessageLength() >= this.config.respMinLength;
     const isRandomGrantTurn = Math.random() <= this.config.p_resp;
 
     const isGrantig = isRandomGrantTurn && hasMinResponseLength;

@@ -21,6 +21,7 @@ module.exports.griasde = (event, context, cb) => cb(null, { message: 'Griasde na
 
 module.exports.grantel = (event, context, callback) => {
   console.info('Retrieved body', event.body);
+  console.info('Retrieved message', event.body.message);
   console.info('Acting with config', botConfig);
 
   const botToken = event.stageVariables.BOT_TOKEN;

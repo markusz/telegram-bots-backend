@@ -14,7 +14,11 @@ module.exports.inject = () => class TelegramMessage {
   }
 
   getLowerCaseTextMessage() {
-    return this.message.text.toLowerCase();
+    return this.message.text ? this.message.text.toLowerCase() : null;
+  }
+
+  getTextMessageLength() {
+    return this.message.text ? this.message.text.length : -1;
   }
 
   getChatId() {
