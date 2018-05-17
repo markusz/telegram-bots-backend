@@ -2,25 +2,11 @@ service: telegram-bots-backend
 
 provider:
   name: aws
-  runtime: nodejs4.3
+  runtime: nodejs8.10
   stage: prod
   region: eu-central-1
   memory: 128
   timeout: 3
-# you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
 
 # you can add packaging information here
 package:

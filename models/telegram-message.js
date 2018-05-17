@@ -21,6 +21,10 @@ module.exports.inject = () => class TelegramMessage {
     return this.message.text ? this.message.text.length : -1;
   }
 
+  isRegularMessage() {
+    return this.message !== undefined;
+  }
+
   getChatId() {
     return this.message.chat.id;
   }

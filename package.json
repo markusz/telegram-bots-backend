@@ -2,7 +2,7 @@
   "name": "telegram-bots-backend",
   "version": "0.0.1",
   "engines": {
-    "node": ">=4.0"
+    "node": ">=8.0"
   },
   "description": "The backend for a number of Telegram bots, built on AWS Lambda with the amazing Serverless Framework",
   "author": "Markus Ziller",

@@ -56,6 +56,10 @@ module.exports.inject = (DependenciesBroker, UtilsBroker, ModelBroker) => class 
   }
 
   handleIncomingMessage(telegramMessage) {
+    if (!telegramMessage.isRegularMessage()) {
+      return UtilsBroker.TelegramAPIProxy.doNothing();
+    }
+
     const telegramAPIProxy = UtilsBroker.TelegramAPIProxy.getInstance(this.token, telegramMessage.getChatId());
 
     const typeOfMessage = Grantler.getTypeOfMessage(telegramMessage);
