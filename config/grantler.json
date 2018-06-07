@@ -1,5 +1,5 @@
 {
-  "p_resp": 0.25,
+  "p_resp": 0.10,
   "respMinLength": 12,
   "reactToDirectAddress": true,
   "reactToForcedGranteln": true
